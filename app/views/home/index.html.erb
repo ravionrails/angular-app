@@ -1,0 +1,33 @@
+
+<h3>New Property</h3>	
+<form ng-submit="saveProperty()">
+	<div>
+		<label>Name</label>
+		<input type="text" ng-model="property.name" />
+	</div>
+	<div>
+		<label>Address Line</label>
+		<input type="text" ng-model="property.address_line" />
+	</div>
+	<div>
+		<label>City</label>
+		<input type="text" ng-model="property.city" />
+	</div>
+	<div>
+		<label>Country</label>
+		<select ng-model="property.country" >
+			<option value="">Select Country</option>
+			<option ng-repeat="country in countries | orderBy: 'name'" value="{{country.name}}">{{ country.name }}</option>
+		</select>
+	</div>
+	<div>
+		<button type="submit" class="btn-success btn-lg">Save</button>
+	</div>
+</form>
+
+<div>
+	<h3>Properties list</h3>
+	<ul>
+		<li ng-repeat="property in properties_list">{{ property.name }}</li>
+	</ul>
+</div>
