@@ -28,6 +28,6 @@
 <div>
 	<h3>Properties list</h3>
 	<ul>
-		<li ng-repeat="property in properties_list">{{ property.name }}</li>
+		<li ng-repeat="property in properties_list"><a href="#/property/{{ property.id }}">{{ property.name }}</a></li>
 	</ul>
 </div>

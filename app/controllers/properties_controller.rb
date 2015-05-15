@@ -10,6 +10,11 @@ class PropertiesController < ApplicationController
 		respond_with @property
 	end
 
+	def show
+		@property = Property.find(params[:id])
+		respond_with @property
+	end
+
 	private
 
 	def property_params

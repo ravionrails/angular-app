@@ -10,6 +10,15 @@
 	<div class="container">
 		<h1>{{ app_name }}</h1>
 		<%= yield %>
+		<ui-view></ui-view>
+
+		<script type="text/ng-template" id="/property.html">
+			<h3>{{ property.name }}</h3>
+			<div class="well">
+				{{ property.address_line }}, {{ property.city }}, {{ property.country }}
+			</div>
+		</script>
+
 	</div>
 </body>
 </html>
