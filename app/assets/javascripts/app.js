@@ -5,16 +5,22 @@ angmod.config(['$stateProvider', '$urlRouterProvider', function( $stateProvider,
 	$stateProvider
 		.state('propertyShow', {
 			url: '/property/{id}',
-			templateUrl: 'property.html',
+			templateUrl: '/property.html',
 			controller: 'MainController',
 			resolve: {
-				property: ['$stateParams', 'properties', function($stateParams, properties){
+				prop: ['$stateParams', 'properties', function($stateParams, properties){
 					return properties.fetchProperty($stateParams.id);
 				}]
+			},
+			controller: function($scope, prop){
+				$scope.property = prop;
 			}
 		});
 
 }]);
+
+
+// factory
 
 angmod.factory('properties', [ '$http', function($http){
 	var obj = {
@@ -24,11 +30,12 @@ angmod.factory('properties', [ '$http', function($http){
 			return $http.post('/properties.json', property).success(function(data){
 				obj.properties.push(data);
 			});
-		}		
+		}
 	}
 
 	obj.fetchProperty = function(id){
 		return $http.get('/properties/' + id + '.json').then(function(res){
+			console.log(res.data);
 			return res.data;
 		});
 	}
@@ -41,6 +48,8 @@ angmod.factory('properties', [ '$http', function($http){
 	return obj;
 
 }]);
+
+// factory
 
 angmod.factory('countries_list', [ function(){
 	var c = {
@@ -60,7 +69,7 @@ angmod.controller('MainController', [ '$scope', '$window', '$http', 'properties'
 	$scope.app_name = "Property Management";
 	$scope.countries = countries_list.list;
 	properties.getProperties();
-	// $scope.property = property;
+	// $scope.property = prop;
 	$scope.properties_list = properties.properties;
 	$scope.saveProperty = function(){
 		properties.createProperty($scope.property);
