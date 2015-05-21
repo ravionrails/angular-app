@@ -1,21 +1,40 @@
 angmod = angular.module('angApp', ['ui.router']);
 
-angmod.config(['$stateProvider', '$urlRouterProvider', function( $stateProvider, $urlRouterProvider ){
+angmod.run(function($rootScope) {
+  $rootScope.app_name = 'Property Management';
+})
+
+angmod.config(['$stateProvider', '$urlRouterProvider', function( $stateProvider, $urlRouterProvider){
 
 	$stateProvider
-		.state('propertyShow', {
+		.state('home', {
+			url: '',
+			// templateUrl: '/',			
+			controller: 'mainCtrl'
+		})
+
+		.state('new_property', {
+			url: '/properties/new',
+			templateUrl: '/new_property.html',
+			controller: 'mainCtrl'
+		})
+
+		.state('properties_list', {
+			url: '/properties',
+			templateUrl: '/properties.html',			
+			controller: 'mainCtrl'
+		})
+
+		.state('property_detail', {
 			url: '/property/{id}',
-			templateUrl: '/property.html',
-			controller: 'MainController',
+			templateUrl: '/property.html',			
+			controller: 'propCtrl',
 			resolve: {
 				prop: ['$stateParams', 'properties', function($stateParams, properties){
 					return properties.fetchProperty($stateParams.id);
 				}]
-			},
-			controller: function($scope, prop){
-				$scope.property = prop;
 			}
-		});
+		})
 
 }]);
 
@@ -35,7 +54,6 @@ angmod.factory('properties', [ '$http', function($http){
 
 	obj.fetchProperty = function(id){
 		return $http.get('/properties/' + id + '.json').then(function(res){
-			console.log(res.data);
 			return res.data;
 		});
 	}
@@ -65,20 +83,17 @@ angmod.factory('countries_list', [ function(){
 	return c;
 } ]);
 
-angmod.controller('MainController', [ '$scope', '$window', '$http', 'properties', 'countries_list',  function($scope, $window, $http, properties, countries_list){
-	$scope.app_name = "Property Management";
+angmod.controller('mainCtrl', [ '$scope', '$window', '$http', 'properties', 'countries_list', '$state' ,function($scope, $window, $http, properties, countries_list, $state) {
 	$scope.countries = countries_list.list;
 	properties.getProperties();
-	// $scope.property = prop;
 	$scope.properties_list = properties.properties;
 	$scope.saveProperty = function(){
 		properties.createProperty($scope.property);
-		//$scope.property = {};
-		//$window.alert('saved'+ $scope.property.name);
+		$state.go('properties_list');
 	}
 
 }]);
 
-// angmod.controller('PropertyController', ['$scope', function($scope){
-// 	s
-// }];
+angmod.controller('propCtrl', ['$scope', 'prop',function($scope, prop){
+	$scope.property = prop;
+}]);

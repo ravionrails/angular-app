@@ -4,18 +4,58 @@
   <title>RailsAngularApp</title>
   <%= stylesheet_link_tag    "application", media: "all" %>
   <%= javascript_include_tag "application"  %>
+  
   <%= csrf_meta_tags %>
 </head>
-<body ng-app="angApp" ng-controller="MainController">
+<body ng-app="angApp">
 	<div class="container">
 		<h1>{{ app_name }}</h1>
-		<%= yield %>
+		<a ui-sref="new_property">New Property</a>
+		<a ui-sref="properties_list">Properties list</a>
+		<%#= yield %>
 		<ui-view></ui-view>
 
 		<script type="text/ng-template" id="/property.html">
 			<h3>{{ property.name }}</h3>
 			<div class="well">
 				{{ property.address_line }}, {{ property.city }}, {{ property.country }}
+			</div>
+		</script>
+
+		<script type="text/ng-template" id="/new_property.html">
+		<h3>New Property</h3>
+			<form ng-submit="saveProperty()">
+				<div>
+					<label>Name</label>
+					<input type="text" ng-model="property.name" />
+				</div>
+				<div>
+					<label>Address Line</label>
+					<input type="text" ng-model="property.address_line" />
+				</div>
+				<div>
+					<label>City</label>
+					<input type="text" ng-model="property.city" />
+				</div>
+				<div>
+					<label>Country</label>
+					<select ng-model="property.country" >
+						<option value="">Select Country</option>
+						<option ng-repeat="country in countries | orderBy: 'name'" value="{{country.name}}">{{ country.name }}</option>
+					</select>
+				</div>
+				<div>
+					<button type="submit" class="btn-success btn-lg">Save</button>
+				</div>
+			</form>
+		</script>
+
+		<script type="text/ng-template" id="/properties.html">
+			<div>
+				<h3>Properties list</h3>
+				<ul>
+					<li ng-repeat="property in properties_list"><a ui-sref="property_detail({id: property.id })">{{ property.name }}</a></li>
+				</ul>
 			</div>
 		</script>
 
