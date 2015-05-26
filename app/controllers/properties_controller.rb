@@ -10,8 +10,19 @@ class PropertiesController < ApplicationController
 		respond_with @property
 	end
 
+	def update
+		@property = Property.find(params[:property][:id]).update_attributes(property_params)
+		respond_with @property
+	end
+
 	def show
 		@property = Property.find(params[:id])
+		respond_with @property
+	end
+
+	def destroy
+		@property = Property.find(params[:id])
+		@property.destroy
 		respond_with @property
 	end
 

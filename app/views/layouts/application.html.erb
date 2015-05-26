@@ -9,9 +9,11 @@
 </head>
 <body ng-app="angApp">
 	<div class="container">
-		<h1>{{ app_name }}</h1>
-		<a ui-sref="new_property">New Property</a>
-		<a ui-sref="properties_list">Properties list</a>
+		<div>
+			<h1>{{ app_name }}</h1>
+			<a ui-sref="new_property">New Property</a> |
+			<a ui-sref="properties_list">Properties list</a>
+		</div>
 		<%#= yield %>
 		<ui-view></ui-view>
 
@@ -23,38 +25,62 @@
 		</script>
 
 		<script type="text/ng-template" id="/new_property.html">
-		<h3>New Property</h3>
-			<form ng-submit="saveProperty()">
-				<div>
-					<label>Name</label>
-					<input type="text" ng-model="property.name" />
-				</div>
-				<div>
-					<label>Address Line</label>
-					<input type="text" ng-model="property.address_line" />
-				</div>
-				<div>
-					<label>City</label>
-					<input type="text" ng-model="property.city" />
-				</div>
-				<div>
-					<label>Country</label>
-					<select ng-model="property.country" >
-						<option value="">Select Country</option>
-						<option ng-repeat="country in countries | orderBy: 'name'" value="{{country.name}}">{{ country.name }}</option>
-					</select>
-				</div>
-				<div>
-					<button type="submit" class="btn-success btn-lg">Save</button>
-				</div>
-			</form>
+			<div class="col-sm-5">
+				<h3>New Property</h3>
+				<form ng-submit="saveProperty()" class="form-horizontalq" name="property_form">
+					<input type="hidden" ng-model="property.id" />
+					<div class="form-group" ng-class="(property_form.property_name.$error.required && blured ) ? 'has-error' : ''">
+						<label class="control-label">Name</label>
+						<input class='form-control' name="property_name" type="text" ng-model="property.name" ng-blur="blured = true" ng-focus="blured = false" required/>
+
+					</div>
+					<div class="form-group">
+						<label class="control-label">Address Line</label>
+						<input class='form-control' type="text" ng-model="property.address_line" />
+					</div>
+					<div class="form-group">
+						<label class="control-label">City</label>
+						<input class='form-control' type="text" ng-model="property.city" />
+					</div>
+					<div class="form-group">
+						<label class="control-label">Country</label>
+						<select class='form-control' ng-model="property.country" >
+							<option value="">Select Country</option>
+							<option ng-repeat="country in countries | orderBy: 'name'" value="{{country.name}}" ng-selected="{{ country.name == property.country }}" >{{ country.name }}</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn-success btn">Save</button>
+					</div>
+				</form>
+			</div>
+			<div class="clearfix"></div>
 		</script>
 
 		<script type="text/ng-template" id="/properties.html">
 			<div>
 				<h3>Properties list</h3>
+				<p ng-show="properties_list" class="bg-info">No properties exist</p>
 				<ul>
-					<li ng-repeat="property in properties_list"><a ui-sref="property_detail({id: property.id })">{{ property.name }}</a></li>
+					<li ng-repeat="property in properties_list">
+						<div class="row" style="border-bottom:1px solid black;">
+							<div class="col-sm-8">
+								<h3>
+									<a ui-sref="property_detail({id: property.id })">{{ $index }}. {{ property.name }}</a>
+									<span>-{{ property.country }}</span>
+								</h3>
+							</div>
+							<div class="col-sm-2">
+								<!--
+								<a ui-sref="property_delete_state({id: property.id, name: property.name })" ng-click="removeProperty(property.id, property.name)" class="btn btn-warning">Delete</a>
+								-->
+								<a href="javascript:void(0);" ng-click="removeProperty(property.id, property.name, $index)" class="btn btn-warning">Delete</a>
+							</div>
+							<div class="col-sm-2">
+								<a ui-sref="property_edit_state({id: property.id })" class="btn btn-warning">Edit</a>
+							</div>
+						</div>
+					</li>
 				</ul>
 			</div>
 		</script>
