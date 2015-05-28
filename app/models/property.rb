@@ -3,6 +3,8 @@ class Property
 	field :name, type: :string
 	field :address_line, type: :string
 	field :city, type: :string
-	field :country, type: :string	
+	field :country, type: :string
+
+	embeds_many :rooms
 
 end

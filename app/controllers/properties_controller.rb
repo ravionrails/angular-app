@@ -17,7 +17,7 @@ class PropertiesController < ApplicationController
 
 	def show
 		@property = Property.find(params[:id])
-		@property.id =@property.id.to_s
+		# @property.id =@property.id.to_s
 		respond_with @property
 	end
 
