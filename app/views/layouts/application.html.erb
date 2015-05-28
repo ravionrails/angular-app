@@ -28,7 +28,7 @@
 			<div class="col-sm-5">
 				<h3>New Property</h3>
 				<form ng-submit="saveProperty()" class="form-horizontalq" name="property_form">
-					<input type="hidden" ng-model="property.id" />
+					<input type="hidden" ng-model="property._id.$oid" />
 					<div class="form-group" ng-class="(property_form.property_name.$error.required && blured ) ? 'has-error' : ''">
 						<label class="control-label">Name</label>
 						<input class='form-control' name="property_name" type="text" ng-model="property.name" ng-blur="blured = true" ng-focus="blured = false" required/>
@@ -60,24 +60,24 @@
 		<script type="text/ng-template" id="/properties.html">
 			<div>
 				<h3>Properties list</h3>
-				<p ng-show="properties_list" class="bg-info">No properties exist</p>
+				<p ng-show="properties_list.length == 0" class="bg-info">No properties exist</p>
 				<ul>
 					<li ng-repeat="property in properties_list">
 						<div class="row" style="border-bottom:1px solid black;">
 							<div class="col-sm-8">
 								<h3>
-									<a ui-sref="property_detail({id: property.id })">{{ $index }}. {{ property.name }}</a>
+									<a ui-sref="property_detail({id: property._id.$oid })">{{ $index }}.  {{ property.name }}</a>
 									<span>-{{ property.country }}</span>
 								</h3>
 							</div>
 							<div class="col-sm-2">
 								<!--
-								<a ui-sref="property_delete_state({id: property.id, name: property.name })" ng-click="removeProperty(property.id, property.name)" class="btn btn-warning">Delete</a>
+								<a ui-sref="property_delete_state({id: property._id.$oid, name: property.name })" ng-click="removeProperty(property._id.$oid, property.name)" class="btn btn-warning">Delete</a>
 								-->
-								<a href="javascript:void(0);" ng-click="removeProperty(property.id, property.name, $index)" class="btn btn-warning">Delete</a>
+								<a href="javascript:void(0);" ng-click="removeProperty(property._id.$oid, property.name, $index)" class="btn btn-warning">Delete</a>
 							</div>
 							<div class="col-sm-2">
-								<a ui-sref="property_edit_state({id: property.id })" class="btn btn-warning">Edit</a>
+								<a ui-sref="property_edit_state({id: property._id.$oid })" class="btn btn-warning">Edit</a>
 							</div>
 						</div>
 					</li>

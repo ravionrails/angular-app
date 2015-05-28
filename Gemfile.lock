@@ -28,6 +28,7 @@ GEM
     angular_rails_csrf (1.0.3)
       rails (>= 3, < 5)
     arel (4.0.2)
+    bson (2.3.0)
     builder (3.1.4)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -37,6 +38,7 @@ GEM
       execjs
     coffee-script-source (1.9.1.1)
     columnize (0.8.9)
+    connection_pool (2.2.0)
     daemons (1.1.9)
     debugger (1.6.8)
       columnize (>= 0.3.1)
@@ -61,8 +63,18 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.25.1)
     minitest (4.7.5)
+    mongoid (4.0.2)
+      activemodel (~> 4.0)
+      moped (~> 2.0.0)
+      origin (~> 2.1)
+      tzinfo (>= 0.3.37)
+    moped (2.0.4)
+      bson (~> 2.2)
+      connection_pool (~> 2.0)
+      optionable (~> 0.2.0)
     multi_json (1.11.0)
-    mysql2 (0.3.18)
+    optionable (0.2.0)
+    origin (2.1.1)
     polyglot (0.3.5)
     rack (1.5.3)
     rack-test (0.6.3)
@@ -125,7 +137,7 @@ DEPENDENCIES
   debugger
   jbuilder (~> 1.2)
   jquery-rails
-  mysql2
+  mongoid
   rails (= 4.0.4)
   sass-rails (~> 4.0.2)
   sdoc

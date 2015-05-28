@@ -21,6 +21,11 @@
 
 //= require angular-ui-router.min
 
+
+//= require init_config
+//= require properties_factory
+//= require countries_factory
+
 //= require app
 
 // require turbolinks

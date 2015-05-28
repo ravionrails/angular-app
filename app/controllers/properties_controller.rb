@@ -11,12 +11,13 @@ class PropertiesController < ApplicationController
 	end
 
 	def update
-		@property = Property.find(params[:property][:id]).update_attributes(property_params)
+		@property = Property.find(params[:id]).update_attributes(property_params)
 		respond_with @property
 	end
 
 	def show
 		@property = Property.find(params[:id])
+		@property.id =@property.id.to_s
 		respond_with @property
 	end
 
